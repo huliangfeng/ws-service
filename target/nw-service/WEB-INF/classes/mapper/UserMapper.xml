@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nw.service.dao.UserDao">
+
+	<select id="getUserInfo" resultType="User">
+		SELECT
+			sau.user_name userName,
+			sau.bind_phone userPhone,
+			sau.user_addr userAddr
+		FROM 
+			sys_app_user sau
+		WHERE
+			sau.bind_phone = #{phone} AND 
+			sau.user_name = #{userName}
+	</select>
+	
+</mapper>

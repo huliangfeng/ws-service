@@ -1,0 +1,15 @@
+com\nw\service\vo\PetImmuneResult.class
+com\nw\service\entity\Pet.class
+com\nw\service\entity\User.class
+com\nw\service\webservice\TestWebService.class
+com\nw\service\vo\ResultEntity.class
+com\nw\service\entity\PetImmune.class
+com\nw\service\dao\PetDao.class
+com\nw\service\dao\UserDao.class
+com\nw\service\webservice\PetWebService.class
+com\nw\service\controller\TestController.class
+com\nw\service\ws\support\ServerPasswordCallback.class
+com\nw\service\controller\Test.class
+com\nw\service\interceptor\LogInterceptor.class
+com\nw\service\webservice\impl\PetWebServiceImpl.class
+com\nw\service\webservice\impl\TestWebServiceImpl.class

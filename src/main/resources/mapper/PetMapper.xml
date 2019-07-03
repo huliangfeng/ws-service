@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nw.service.dao.PetDao">
+
+	<select id="getPetImmuneInfoList"  resultType="PetImmune">
+		SELECT 
+			pir.vaccine_type vaccineType,
+			pir.drugs_name1 vaccineName,
+			(CASE pir.org_id REGEXP '[^0-9]'
+			WHEN 1 then pir.org_id
+			ELSE (SELECT si.shop_name FROM shop_info si WHERE si.shop_info_id = pir.org_id) END) injectOrg,
+			'sys' injectUser,
+			pir.inject_time injectTime,
+			DATE_ADD(pir.inject_time, INTERVAL 1 YEAR) nextImmuneTime
+		FROM
+			pet_immunological_record pir
+		WHERE
+			seven_pet_id = (
+				SELECT sp.seven_pet_id FROM seven_pet sp WHERE sp.user_id = (
+					SELECT sau.user_id FROM sys_app_user sau WHERE sau.bind_phone = #{phone} AND sau.user_name = #{userName}
+				)
+			)
+	</select>
+	
+	<select id="getPetInfo" resultType="Pet">
+		SELECT
+			sp.pet_name petName,
+			sp.pet_pic_positive petPic,
+			sp.pet_varieties petVarieties,
+			sp.pet_color petCoatColor,
+			sp.pet_birthday petBirthday,
+			(CASE sp.pet_sex
+			WHEN '0' THEN '公'
+			WHEN '1' THEN '母'
+			ELSE '未知' END) petSex,
+			ipa.immune_no immuneCertificatesNo,
+			ipa.create_time effectiveDate
+		FROM
+			seven_pet sp LEFT JOIN sys_app_user sau ON sau.user_id = sp.user_id 
+			LEFT JOIN immune_prove_apply ipa ON sau.user_id = ipa.user_id AND ipa.auditor_time = '1' 
+		where 
+			sau.bind_phone = #{phone} AND
+			sau.user_name = #{userName}
+	</select>
+	
+	
+	
+</mapper>
